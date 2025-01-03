@@ -3,13 +3,70 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  /*--background: #ffffff;*/
+  --background: #eff1f5;
   --foreground: #171717;
+}
+
+/* Latte Theme */
+:root[data-theme="latte"] {
+  --background: #eff1f5;
+  --foreground: #4c4f69;
+  --surface0: #ccd0da;
+  --surface1: #bcc0cc;
+  --surface2: #acb0be;
+  --base: #e6e9ef;
+  --mantle: #dce0e8;
+  --crust: #dce0e8;
+  --rosewater: #dc8a78;
+  --flamingo: #dd7878;
+  --pink: #ea76cb;
+  --mauve: #8839ef;
+  --red: #d20f39;
+  --maroon: #e64553;
+  --peach: #fe640b;
+  --yellow: #df8e1d;
+  --green: #40a02b;
+  --teal: #179299;
+  --blue: #1e66f5;
+  --sky: #04a5e5;
+  --lavender: #7287fd;
+  --text: #4c4f69;
+  --overlay: #ccd0da;
+}
+
+
+/* Mocha Theme */
+:root[data-theme="mocha"] {
+  --background: #1e1e2e;
+  --foreground: #d9e0ee;
+  --surface0: #313244;
+  --surface1: #45475a;
+  --surface2: #585b70;
+  --base: #1e1e2e;
+  --mantle: #181825;
+  --crust: #11111b;
+  --rosewater: #f5e0dc;
+  --flamingo: #f2cdcd;
+  --pink: #f5c2e7;
+  --mauve: #cba6f7;
+  --red: #f38ba8;
+  --maroon: #eba0ac;
+  --peach: #fab387;
+  --yellow: #f9e2af;
+  --green: #a6e3a1;
+  --teal: #94e2d5;
+  --blue: #89b4fa;
+  --sky: #74c7ec;
+  --lavender: #b4befe;
+  --text: #d9e0ee;
+  --overlay: #313244;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    /*--background: #0a0a0a;*/
+    --background: #1e1e2e;
     --foreground: #ededed;
   }
 }
