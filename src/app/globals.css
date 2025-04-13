@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /*--background: #ffffff;*/
-  --background: #eff1f5;
-  --foreground: #171717;
-}
-
 /* Latte Theme */
 :root[data-theme="latte"] {
   --background: #eff1f5;
@@ -61,14 +55,6 @@
   --lavender: #b4befe;
   --text: #d9e0ee;
   --overlay: #313244;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    /*--background: #0a0a0a;*/
-    --background: #1e1e2e;
-    --foreground: #ededed;
-  }
 }
 
 body {
