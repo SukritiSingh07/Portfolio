@@ -6,38 +6,62 @@
 
 @layer base {
   :root {
-    --background: 220 14% 92%;
-    --foreground: 220 20% 15%;
+    /* Light theme — MAX funky: saturated candy pop palette */
+    --background: 290 80% 97%;
+    --foreground: 250 50% 10%;
 
-    --card: 220 14% 85%;
-    --card-foreground: 220 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 250 50% 10%;
 
-    --card-elevated: 220 16% 80%;
-    --card-elevated-foreground: 220 20% 15%;
+    --card-elevated: 320 90% 98%;
+    --card-elevated-foreground: 250 50% 10%;
 
-    --popover: 220 14% 90%;
-    --popover-foreground: 220 20% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 250 50% 10%;
 
-    --primary: 220 20% 25%;
-    --primary-foreground: 220 14% 92%;
+    /* Electric blue */
+    --primary: 232 100% 56%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 12% 78%;
-    --secondary-foreground: 220 20% 15%;
+    /* Hot pink accent */
+    --accent: 328 100% 58%;
+    --accent-foreground: 0 0% 100%;
 
-    --muted: 220 10% 88%;
-    --muted-foreground: 220 10% 45%;
+    --secondary: 270 100% 92%;
+    --secondary-foreground: 260 60% 18%;
 
-    --accent: 220 16% 72%;
-    --accent-foreground: 220 20% 15%;
+    --muted: 290 70% 93%;
+    --muted-foreground: 260 25% 38%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 90% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 12% 82%;
-    --input: 220 12% 82%;
-    --ring: 220 20% 25%;
+    --border: 285 60% 84%;
+    --input: 285 60% 84%;
+    --ring: 232 100% 56%;
 
     --radius: 1rem;
+
+    /* Funky extra hues — turned up */
+    --funk-violet: 270 100% 65%;
+    --funk-cyan: 188 100% 50%;
+    --funk-lime: 82 95% 55%;
+    --funk-yellow: 46 100% 58%;
+    --funk-orange: 22 100% 60%;
+    --funk-magenta: 305 100% 60%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(232 100% 56%), hsl(270 100% 65%) 45%, hsl(328 100% 58%));
+    --gradient-soft: linear-gradient(135deg, hsl(232 100% 56% / 0.18), hsl(270 100% 65% / 0.18) 50%, hsl(328 100% 58% / 0.18));
+    --gradient-funk: linear-gradient(120deg, hsl(188 100% 50%), hsl(232 100% 56%), hsl(270 100% 65%), hsl(305 100% 60%), hsl(328 100% 58%), hsl(22 100% 60%), hsl(46 100% 58%));
+    --gradient-mesh:
+      radial-gradient(at 8% 12%, hsl(232 100% 56% / 0.38) 0px, transparent 42%),
+      radial-gradient(at 92% 10%, hsl(328 100% 58% / 0.38) 0px, transparent 42%),
+      radial-gradient(at 82% 88%, hsl(270 100% 65% / 0.36) 0px, transparent 45%),
+      radial-gradient(at 14% 86%, hsl(188 100% 50% / 0.34) 0px, transparent 45%),
+      radial-gradient(at 60% 38%, hsl(305 100% 60% / 0.22) 0px, transparent 50%),
+      radial-gradient(at 38% 62%, hsl(46 100% 58% / 0.22) 0px, transparent 50%),
+      radial-gradient(at 92% 50%, hsl(22 100% 60% / 0.20) 0px, transparent 45%);
+    --shadow-glow: 0 20px 60px -15px hsl(232 100% 56% / 0.45), 0 10px 30px -10px hsl(328 100% 58% / 0.40), 0 0 40px -10px hsl(270 100% 65% / 0.35), 0 0 60px -20px hsl(188 100% 50% / 0.30);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -53,36 +77,55 @@
   }
 
   .dark {
-    --background: 220 20% 10%;
-    --foreground: 220 14% 92%;
+    /* Dark theme — deep black with neon blue + hot pink */
+    --background: 240 20% 5%;
+    --foreground: 230 25% 96%;
 
-    --card: 220 18% 16%;
-    --card-foreground: 220 14% 92%;
+    --card: 240 20% 9%;
+    --card-foreground: 230 25% 96%;
 
-    --card-elevated: 220 18% 22%;
-    --card-elevated-foreground: 220 14% 92%;
+    --card-elevated: 240 18% 13%;
+    --card-elevated-foreground: 230 25% 96%;
 
-    --popover: 220 18% 14%;
-    --popover-foreground: 220 14% 92%;
+    --popover: 240 20% 7%;
+    --popover-foreground: 230 25% 96%;
 
-    --primary: 220 14% 92%;
-    --primary-foreground: 220 20% 10%;
+    /* Neon electric blue */
+    --primary: 220 95% 65%;
+    --primary-foreground: 240 20% 5%;
 
-    --secondary: 220 16% 22%;
-    --secondary-foreground: 220 14% 92%;
+    /* Vivid hot pink */
+    --accent: 328 90% 65%;
+    --accent-foreground: 240 20% 5%;
 
-    --muted: 220 14% 20%;
-    --muted-foreground: 220 10% 55%;
+    --secondary: 240 18% 15%;
+    --secondary-foreground: 230 25% 96%;
 
-    --accent: 220 16% 28%;
-    --accent-foreground: 220 14% 92%;
+    --muted: 240 15% 14%;
+    --muted-foreground: 230 10% 65%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 16% 22%;
-    --input: 220 16% 22%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 240 18% 18%;
+    --input: 240 18% 18%;
+    --ring: 220 95% 65%;
+
+    --funk-violet: 270 95% 72%;
+    --funk-cyan: 188 95% 60%;
+    --funk-lime: 80 90% 60%;
+    --funk-yellow: 48 100% 65%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(220 95% 65%), hsl(270 95% 72%) 45%, hsl(328 90% 65%));
+    --gradient-soft: linear-gradient(135deg, hsl(220 95% 65% / 0.20), hsl(270 95% 72% / 0.18) 50%, hsl(328 90% 65% / 0.20));
+    --gradient-funk: linear-gradient(120deg, hsl(188 95% 60%), hsl(220 95% 65%), hsl(270 95% 72%), hsl(328 90% 65%), hsl(48 100% 65%));
+    --gradient-mesh:
+      radial-gradient(at 12% 18%, hsl(220 95% 65% / 0.25) 0px, transparent 45%),
+      radial-gradient(at 88% 14%, hsl(328 90% 65% / 0.22) 0px, transparent 45%),
+      radial-gradient(at 78% 88%, hsl(270 95% 72% / 0.22) 0px, transparent 45%),
+      radial-gradient(at 18% 82%, hsl(188 95% 60% / 0.18) 0px, transparent 45%);
+    --shadow-glow: 0 20px 60px -15px hsl(220 95% 65% / 0.45), 0 10px 30px -10px hsl(328 90% 65% / 0.35), 0 0 40px -10px hsl(270 95% 72% / 0.30);
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -102,31 +145,112 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+    background-size: 200% 200%;
+    animation: mesh-drift 24s ease-in-out infinite;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+  }
+
+  @keyframes mesh-drift {
+    0%, 100% { background-position: 0% 0%; }
+    25% { background-position: 100% 20%; }
+    50% { background-position: 80% 100%; }
+    75% { background-position: 20% 80%; }
   }
 }
 
 @layer utilities {
   .bento-card {
     @apply bg-card text-card-foreground rounded-2xl p-6 transition-all duration-300 ease-out;
+    border: 1px solid hsl(var(--border));
+    position: relative;
   }
 
+  .bento-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: var(--gradient-funk);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .bento-card:hover::before { opacity: 1; }
+
   .bento-card:hover {
-    @apply shadow-lg;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    border-color: transparent;
+    box-shadow:
+      0 18px 50px -15px hsl(var(--primary) / 0.45),
+      0 0 0 1px hsl(var(--accent) / 0.25),
+      0 0 40px -10px hsl(var(--funk-violet) / 0.40),
+      0 0 60px -20px hsl(var(--funk-cyan) / 0.35);
   }
 
   .bento-card-elevated {
     @apply rounded-2xl p-6 transition-all duration-300 ease-out;
     background: hsl(var(--card-elevated));
     color: hsl(var(--card-elevated-foreground));
+    border: 1px solid hsl(var(--border));
   }
 
   .bento-card-elevated:hover {
-    @apply shadow-lg;
     transform: translateY(-2px);
+    border-color: hsl(var(--accent) / 0.4);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .bg-gradient-soft {
+    background: var(--gradient-soft);
+  }
+
+  .bg-gradient-funk {
+    background: var(--gradient-funk);
+  }
+
+  .bg-gradient-mesh {
+    background-image: var(--gradient-mesh);
+  }
+
+  .text-gradient-funk {
+    background: var(--gradient-funk);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: funk-shift 8s ease-in-out infinite;
+  }
+
+  .ring-funk {
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.35),
+      0 0 0 4px hsl(var(--accent) / 0.15),
+      0 10px 30px -10px hsl(var(--funk-violet) / 0.35);
+  }
+
+  @keyframes funk-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 }

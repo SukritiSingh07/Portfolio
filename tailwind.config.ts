@@ -43,6 +43,15 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        "card-elevated": "hsl(var(--card-elevated))",
+        funk: {
+          violet: "hsl(var(--funk-violet))",
+          cyan: "hsl(var(--funk-cyan))",
+          lime: "hsl(var(--funk-lime))",
+          yellow: "hsl(var(--funk-yellow))",
+          orange: "hsl(var(--funk-orange))",
+          magenta: "hsl(var(--funk-magenta))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
