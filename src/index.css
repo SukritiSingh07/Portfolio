@@ -6,62 +6,61 @@
 
 @layer base {
   :root {
-    /* Light theme — MAX funky: saturated candy pop palette */
-    --background: 290 80% 97%;
-    --foreground: 250 50% 10%;
+    /* Light theme — soft lavender/periwinkle background (matches reference) */
+    --background: 245 55% 91%;
+    --foreground: 252 60% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 250 50% 10%;
+    --card: 250 65% 96%;
+    --card-foreground: 252 60% 12%;
 
-    --card-elevated: 320 90% 98%;
-    --card-elevated-foreground: 250 50% 10%;
+    --card-elevated: 255 70% 97%;
+    --card-elevated-foreground: 252 60% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 250 50% 10%;
+    --popover-foreground: 252 60% 10%;
 
-    /* Electric blue */
-    --primary: 232 100% 56%;
+    /* Electric indigo */
+    --primary: 250 90% 56%;
     --primary-foreground: 0 0% 100%;
 
-    /* Hot pink accent */
-    --accent: 328 100% 58%;
+    /* Magenta-rose accent (from the wave glow) */
+    --accent: 322 88% 56%;
     --accent-foreground: 0 0% 100%;
 
-    --secondary: 270 100% 92%;
-    --secondary-foreground: 260 60% 18%;
+    --secondary: 260 70% 93%;
+    --secondary-foreground: 252 60% 14%;
 
-    --muted: 290 70% 93%;
-    --muted-foreground: 260 25% 38%;
+    --muted: 255 50% 93%;
+    --muted-foreground: 252 25% 32%;
 
-    --destructive: 0 90% 60%;
+    --destructive: 350 95% 58%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 285 60% 84%;
-    --input: 285 60% 84%;
-    --ring: 232 100% 56%;
+    --border: 260 50% 84%;
+    --input: 260 50% 84%;
+    --ring: 250 90% 56%;
 
     --radius: 1rem;
 
-    /* Funky extra hues — turned up */
-    --funk-violet: 270 100% 65%;
-    --funk-cyan: 188 100% 50%;
-    --funk-lime: 82 95% 55%;
-    --funk-yellow: 46 100% 58%;
-    --funk-orange: 22 100% 60%;
-    --funk-magenta: 305 100% 60%;
+    /* Cinematic palette — deep violet, magenta, indigo, soft rose, ice */
+    --funk-violet: 268 85% 52%;
+    --funk-cyan: 220 90% 62%;
+    --funk-lime: 280 70% 70%;
+    --funk-yellow: 340 90% 70%;
+    --funk-orange: 305 85% 58%;
+    --funk-magenta: 322 88% 56%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(232 100% 56%), hsl(270 100% 65%) 45%, hsl(328 100% 58%));
-    --gradient-soft: linear-gradient(135deg, hsl(232 100% 56% / 0.18), hsl(270 100% 65% / 0.18) 50%, hsl(328 100% 58% / 0.18));
-    --gradient-funk: linear-gradient(120deg, hsl(188 100% 50%), hsl(232 100% 56%), hsl(270 100% 65%), hsl(305 100% 60%), hsl(328 100% 58%), hsl(22 100% 60%), hsl(46 100% 58%));
+    --gradient-primary: linear-gradient(135deg, hsl(220 90% 62%) 0%, hsl(250 90% 56%) 35%, hsl(268 85% 52%) 65%, hsl(322 88% 56%) 100%);
+    --gradient-soft: linear-gradient(135deg, hsl(250 90% 56% / 0.18), hsl(268 85% 52% / 0.18) 50%, hsl(322 88% 56% / 0.20));
+    --gradient-funk: linear-gradient(120deg, hsl(220 90% 62%), hsl(250 90% 56%), hsl(268 85% 52%), hsl(305 85% 58%), hsl(322 88% 56%), hsl(340 90% 70%));
     --gradient-mesh:
-      radial-gradient(at 8% 12%, hsl(232 100% 56% / 0.38) 0px, transparent 42%),
-      radial-gradient(at 92% 10%, hsl(328 100% 58% / 0.38) 0px, transparent 42%),
-      radial-gradient(at 82% 88%, hsl(270 100% 65% / 0.36) 0px, transparent 45%),
-      radial-gradient(at 14% 86%, hsl(188 100% 50% / 0.34) 0px, transparent 45%),
-      radial-gradient(at 60% 38%, hsl(305 100% 60% / 0.22) 0px, transparent 50%),
-      radial-gradient(at 38% 62%, hsl(46 100% 58% / 0.22) 0px, transparent 50%),
-      radial-gradient(at 92% 50%, hsl(22 100% 60% / 0.20) 0px, transparent 45%);
-    --shadow-glow: 0 20px 60px -15px hsl(232 100% 56% / 0.45), 0 10px 30px -10px hsl(328 100% 58% / 0.40), 0 0 40px -10px hsl(270 100% 65% / 0.35), 0 0 60px -20px hsl(188 100% 50% / 0.30);
+      radial-gradient(ellipse 70% 50% at 5% 10%, hsl(250 90% 60% / 0.38) 0px, transparent 55%),
+      radial-gradient(ellipse 65% 55% at 98% 5%, hsl(322 88% 62% / 0.36) 0px, transparent 55%),
+      radial-gradient(ellipse 85% 60% at 92% 98%, hsl(268 85% 55% / 0.40) 0px, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 2% 92%, hsl(220 90% 65% / 0.32) 0px, transparent 55%),
+      radial-gradient(ellipse 50% 35% at 50% 50%, hsl(305 85% 62% / 0.22) 0px, transparent 65%),
+      linear-gradient(135deg, hsl(245 70% 90%) 0%, hsl(265 60% 91%) 50%, hsl(310 55% 91%) 100%);
+    --shadow-glow: 0 20px 60px -15px hsl(250 90% 56% / 0.45), 0 10px 40px -10px hsl(322 88% 56% / 0.40), 0 0 60px -15px hsl(268 85% 52% / 0.35);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -77,54 +76,57 @@
   }
 
   .dark {
-    /* Dark theme — deep black with neon blue + hot pink */
-    --background: 240 20% 5%;
-    --foreground: 230 25% 96%;
+    /* Dark theme — "Midnight Aurora": inky navy-violet base with magenta + indigo wave glow */
+    --background: 252 50% 5%;
+    --foreground: 250 30% 96%;
 
-    --card: 240 20% 9%;
-    --card-foreground: 230 25% 96%;
+    --card: 252 45% 8%;
+    --card-foreground: 250 30% 96%;
 
-    --card-elevated: 240 18% 13%;
-    --card-elevated-foreground: 230 25% 96%;
+    --card-elevated: 254 40% 12%;
+    --card-elevated-foreground: 250 30% 96%;
 
-    --popover: 240 20% 7%;
-    --popover-foreground: 230 25% 96%;
+    --popover: 252 50% 6%;
+    --popover-foreground: 250 30% 96%;
 
-    /* Neon electric blue */
-    --primary: 220 95% 65%;
-    --primary-foreground: 240 20% 5%;
+    /* Electric indigo-blue */
+    --primary: 245 95% 68%;
+    --primary-foreground: 252 50% 5%;
 
-    /* Vivid hot pink */
-    --accent: 328 90% 65%;
-    --accent-foreground: 240 20% 5%;
+    /* Hot magenta-rose */
+    --accent: 322 92% 64%;
+    --accent-foreground: 252 50% 5%;
 
-    --secondary: 240 18% 15%;
-    --secondary-foreground: 230 25% 96%;
+    --secondary: 254 35% 15%;
+    --secondary-foreground: 250 30% 96%;
 
-    --muted: 240 15% 14%;
-    --muted-foreground: 230 10% 65%;
+    --muted: 252 28% 14%;
+    --muted-foreground: 250 18% 72%;
 
-    --destructive: 0 70% 55%;
+    --destructive: 350 95% 62%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 18% 18%;
-    --input: 240 18% 18%;
-    --ring: 220 95% 65%;
+    --border: 258 35% 22%;
+    --input: 258 35% 22%;
+    --ring: 245 95% 68%;
 
-    --funk-violet: 270 95% 72%;
-    --funk-cyan: 188 95% 60%;
-    --funk-lime: 80 90% 60%;
-    --funk-yellow: 48 100% 65%;
+    --funk-violet: 268 90% 70%;
+    --funk-cyan: 222 95% 70%;
+    --funk-lime: 285 75% 75%;
+    --funk-yellow: 340 95% 75%;
+    --funk-orange: 305 90% 66%;
+    --funk-magenta: 322 92% 64%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(220 95% 65%), hsl(270 95% 72%) 45%, hsl(328 90% 65%));
-    --gradient-soft: linear-gradient(135deg, hsl(220 95% 65% / 0.20), hsl(270 95% 72% / 0.18) 50%, hsl(328 90% 65% / 0.20));
-    --gradient-funk: linear-gradient(120deg, hsl(188 95% 60%), hsl(220 95% 65%), hsl(270 95% 72%), hsl(328 90% 65%), hsl(48 100% 65%));
+    --gradient-primary: linear-gradient(135deg, hsl(222 95% 70%) 0%, hsl(245 95% 68%) 35%, hsl(268 90% 70%) 65%, hsl(322 92% 64%) 100%);
+    --gradient-soft: linear-gradient(135deg, hsl(245 95% 68% / 0.18), hsl(268 90% 70% / 0.18) 50%, hsl(322 92% 64% / 0.22));
+    --gradient-funk: linear-gradient(120deg, hsl(222 95% 70%), hsl(245 95% 68%), hsl(268 90% 70%), hsl(305 90% 66%), hsl(322 92% 64%), hsl(340 95% 75%));
     --gradient-mesh:
-      radial-gradient(at 12% 18%, hsl(220 95% 65% / 0.25) 0px, transparent 45%),
-      radial-gradient(at 88% 14%, hsl(328 90% 65% / 0.22) 0px, transparent 45%),
-      radial-gradient(at 78% 88%, hsl(270 95% 72% / 0.22) 0px, transparent 45%),
-      radial-gradient(at 18% 82%, hsl(188 95% 60% / 0.18) 0px, transparent 45%);
-    --shadow-glow: 0 20px 60px -15px hsl(220 95% 65% / 0.45), 0 10px 30px -10px hsl(328 90% 65% / 0.35), 0 0 40px -10px hsl(270 95% 72% / 0.30);
+      radial-gradient(ellipse 80% 50% at 12% 15%, hsl(245 95% 68% / 0.32) 0px, transparent 60%),
+      radial-gradient(ellipse 70% 55% at 90% 10%, hsl(322 92% 64% / 0.30) 0px, transparent 60%),
+      radial-gradient(ellipse 90% 60% at 85% 90%, hsl(268 90% 70% / 0.32) 0px, transparent 65%),
+      radial-gradient(ellipse 80% 50% at 10% 85%, hsl(222 95% 70% / 0.24) 0px, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 50%, hsl(305 90% 66% / 0.16) 0px, transparent 70%);
+    --shadow-glow: 0 20px 60px -15px hsl(245 95% 68% / 0.55), 0 10px 40px -10px hsl(322 92% 64% / 0.45), 0 0 60px -15px hsl(268 90% 70% / 0.40);
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -148,7 +150,7 @@
     background-image: var(--gradient-mesh);
     background-attachment: fixed;
     background-size: 200% 200%;
-    animation: mesh-drift 24s ease-in-out infinite;
+    animation: mesh-drift 28s ease-in-out infinite;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -194,7 +196,7 @@
       0 18px 50px -15px hsl(var(--primary) / 0.45),
       0 0 0 1px hsl(var(--accent) / 0.25),
       0 0 40px -10px hsl(var(--funk-violet) / 0.40),
-      0 0 60px -20px hsl(var(--funk-cyan) / 0.35);
+      0 0 60px -20px hsl(var(--funk-magenta) / 0.35);
   }
 
   .bento-card-elevated {
@@ -217,21 +219,10 @@
     color: transparent;
   }
 
-  .bg-gradient-primary {
-    background: var(--gradient-primary);
-  }
-
-  .bg-gradient-soft {
-    background: var(--gradient-soft);
-  }
-
-  .bg-gradient-funk {
-    background: var(--gradient-funk);
-  }
-
-  .bg-gradient-mesh {
-    background-image: var(--gradient-mesh);
-  }
+  .bg-gradient-primary { background: var(--gradient-primary); }
+  .bg-gradient-soft { background: var(--gradient-soft); }
+  .bg-gradient-funk { background: var(--gradient-funk); }
+  .bg-gradient-mesh { background-image: var(--gradient-mesh); }
 
   .text-gradient-funk {
     background: var(--gradient-funk);

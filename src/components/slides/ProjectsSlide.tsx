@@ -30,7 +30,7 @@ const projects: Project[] = [
       "Graph-based employee analytics — completion rates & performance tracking",
     ],
     role: "Full-stack Developer",
-    year: "2024",
+    year: "Sep 2024 – Nov 2024",
   },
   {
     name: "Friends Chat",
@@ -45,7 +45,7 @@ const projects: Project[] = [
       "Role-based access control for user permissions",
     ],
     role: "Full-stack Developer",
-    year: "2025",
+    year: "Jan 2025",
   },
   {
     name: "AI Feedback & Evaluation System",
@@ -59,8 +59,23 @@ const projects: Project[] = [
       "Interactive dashboards for visualizing feedback trends",
       "Actionable summaries to assist managers in decision-making",
     ],
-    role: "Software Development Engineer Intern @ Think41",
-    year: "2025",
+    role: "SDE Intern @ Think41",
+    year: "Feb – Jun 2025",
+  },
+  {
+    name: "Multi-Agent AI Support & Escalation System",
+    description: "AI-powered support system using multi-agent orchestration with specialized domain agents and Human-in-the-Loop escalation for unresolved cases.",
+    tags: ["OpenAI SDK", "LLMs", "Agent Orchestration", "Prompt Engineering"],
+    longDescription:
+      "Built at Think41, this multi-agent AI support system uses an orchestration architecture with specialized agents handling different support domains. Each agent is instruction-driven with detailed prompts to resolve niche issues accurately and contextually. Unresolved cases escalate to human review via a Human-in-the-Loop mechanism, ensuring high-quality and reliable support outcomes.",
+    features: [
+      "Multi-agent orchestration with specialized domain agents",
+      "Instruction-driven agents with detailed prompt engineering",
+      "Human-in-the-Loop escalation for unresolved support cases",
+      "Contextual, accurate resolution across diverse support domains",
+    ],
+    role: "SDE Intern @ Think41",
+    year: "Feb – Jun 2025",
   },
 ];
 

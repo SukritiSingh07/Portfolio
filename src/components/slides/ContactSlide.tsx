@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, MapPin, Phone } from "lucide-react";
+import { Mail, Github, Linkedin, MapPin, Phone, Download } from "lucide-react";
+import resumePdf from "@/assets/resume.pdf";
 
 const ContactSlide = () => (
   <div className="space-y-10 text-center max-w-2xl mx-auto">
@@ -49,6 +50,19 @@ const ContactSlide = () => (
           <p className="text-sm text-muted-foreground">Bangalore, India</p>
         </div>
       </div>
+    </div>
+
+    <div data-animate>
+      <motion.a
+        href={resumePdf}
+        download="Sukriti_Singh_Resume.pdf"
+        whileHover={{ scale: 1.03, y: -2 }}
+        whileTap={{ scale: 0.97 }}
+        className="flex items-center justify-center gap-3 w-full px-6 py-4 rounded-2xl bg-gradient-primary text-primary-foreground font-semibold text-sm shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+      >
+        <Download className="w-5 h-5" />
+        Download Resume
+      </motion.a>
     </div>
   </div>
 );

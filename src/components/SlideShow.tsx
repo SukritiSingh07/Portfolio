@@ -209,10 +209,10 @@ const SlideShow = ({ slides, initialSlide = 0, onClose }: SlideShowProps) => {
           {slides.map((slide) => (
             <div
               key={slide.id}
-              className="absolute inset-0 flex items-center justify-center p-8 md:p-16"
+              className="absolute inset-0 flex items-start justify-center p-8 md:p-16 overflow-y-auto"
               style={{ display: "none", backfaceVisibility: "hidden" }}
             >
-              <div className="w-full max-w-5xl">
+              <div className="w-full max-w-5xl min-h-full flex flex-col justify-center">
                 {slide.content}
               </div>
             </div>

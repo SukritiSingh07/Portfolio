@@ -1,30 +1,47 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Code2, Briefcase, FolderOpen, GraduationCap, Mail, Github, Linkedin, ExternalLink, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Briefcase, GraduationCap, Mail, GithubIcon, LucideLinkedin, ExternalLink, ChevronDown, FolderOpen } from "lucide-react";
 import BentoCard from "@/components/BentoCard";
 import ThemeToggle from "@/components/ThemeToggle";
 import SlideShow from "@/components/SlideShow";
 import IntroSlide from "@/components/slides/IntroSlide";
+import EducationSlide from "@/components/slides/EducationSlide";
 import SkillsSlide from "@/components/slides/SkillsSlide";
 import ExperienceSlide from "@/components/slides/ExperienceSlide";
 import ProjectsSlide from "@/components/slides/ProjectsSlide";
 import ContactSlide from "@/components/slides/ContactSlide";
 import avatarImg from "@/assets/avatar.png";
 
-const skills = ["React", "TypeScript", "Python", "Django", "Node.js", "PostgreSQL", "Docker", "AWS", "Gen AI", "Springboot"];
+const skillDomains = [
+  { label: "Frontend Dev", sub: "React · TS · HTML/CSS", color: "bg-primary/10 text-primary border-primary/20" },
+  { label: "Backend Dev", sub: "Node · Django · Spring", color: "bg-accent/10 text-accent border-accent/20" },
+  { label: "AI & Gen AI", sub: "LLMs · OpenAI · FastAPI", color: "bg-funk-violet/10 text-funk-violet border-funk-violet/20" },
+  { label: "Cloud & DevOps", sub: "AWS · GCP · Docker", color: "bg-funk-cyan/10 text-funk-cyan border-funk-cyan/20" },
+  { label: "Databases", sub: "PostgreSQL · MongoDB · MySQL", color: "bg-funk-magenta/10 text-funk-magenta border-funk-magenta/20" },
+  { label: "Languages", sub: "Python · Java · C++", color: "bg-funk-yellow/10 text-funk-yellow border-funk-yellow/20" },
+];
 
 const slideData = [
   { id: "intro", label: "Intro", content: <IntroSlide /> },
+  { id: "education", label: "Education", content: <EducationSlide /> },
   { id: "skills", label: "Skills", content: <SkillsSlide /> },
   { id: "experience", label: "Experience", content: <ExperienceSlide /> },
   { id: "projects", label: "Projects", content: <ProjectsSlide /> },
   { id: "contact", label: "Contact", content: <ContactSlide /> },
 ];
 
+const roles = ["Full-Stack Developer", "AI Systems Builder", "Problem Solver"];
+
 const Index = () => {
   const [slideShowOpen, setSlideShowOpen] = useState(false);
   const [initialSlide, setInitialSlide] = useState(0);
+  const [roleIndex, setRoleIndex] = useState(0);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => setRoleIndex(i => (i + 1) % roles.length), 2600);
+    return () => clearInterval(interval);
+  }, []);
 
   const openSlide = useCallback((slideId: string) => {
     const idx = slideData.findIndex(s => s.id === slideId);
@@ -32,10 +49,8 @@ const Index = () => {
     setSlideShowOpen(true);
   }, []);
 
-  // Open slideshow on scroll down when at the bottom of the grid
   useEffect(() => {
     if (slideShowOpen) return;
-
     const handleWheel = (e: WheelEvent) => {
       const el = gridRef.current;
       if (!el) return;
@@ -46,7 +61,6 @@ const Index = () => {
         setSlideShowOpen(true);
       }
     };
-
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
   }, [slideShowOpen]);
@@ -55,7 +69,6 @@ const Index = () => {
     <div className="h-screen flex flex-col bg-background transition-colors duration-300 overflow-hidden">
       <ThemeToggle />
 
-      {/* Slideshow overlay */}
       {slideShowOpen && (
         <SlideShow
           slides={slideData}
@@ -64,81 +77,95 @@ const Index = () => {
         />
       )}
 
-
-      {/* Bento Grid Overview */}
+      {/* Bento Grid */}
       <div ref={gridRef} className="flex-1 pt-4 md:pt-10 lg:pt-16 px-4 md:px-10 lg:px-16 pb-2 md:pb-4 flex flex-col overflow-hidden">
         <div className="flex-1 flex flex-col">
           <div
             className="grid grid-cols-1 md:grid-cols-4 gap-4 flex-1"
-            style={{ gridTemplateRows: "auto 1fr 1fr auto" }}
+            style={{ gridTemplateRows: "1fr 1fr 1fr auto" }}
           >
 
-            {/* Top Row: Achievement + Skills */}
-            <BentoCard className="md:col-span-2 group flex items-center gap-6" delay={0} elevated>
-              <div onClick={() => openSlide("skills")} className="flex items-center gap-6 w-full">
-                <motion.div 
-                  className="flex-shrink-0 flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10"
-                  whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
-                >
-                  <GraduationCap className="w-7 h-7 text-primary" />
-                </motion.div>
-                <div className="flex-1">
-                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Education</p>
-                  <p className="text-4xl font-display font-bold text-foreground">83.6</p>
-                  <p className="text-sm text-muted-foreground">CGPA · BTech IT</p>
-                  <div className="flex gap-2 mt-2 max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100 transition-all duration-300 overflow-hidden">
-                    <span className="px-2.5 py-1 text-xs font-medium rounded-lg bg-secondary text-secondary-foreground">GGSIPU</span>
-                    <span className="px-2.5 py-1 text-xs font-medium rounded-lg bg-secondary text-secondary-foreground">2021 – 2025</span>
-                    <span className="px-2.5 py-1 text-xs font-medium rounded-lg bg-secondary text-secondary-foreground">New Delhi</span>
+            {/* Top Row: Education + Skills */}
+            <BentoCard className="md:col-span-2 group" delay={0} elevated>
+              <div onClick={() => openSlide("education")} className="cursor-pointer flex flex-col h-full justify-between">
+                {/* Top */}
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10">
+                    <GraduationCap className="w-5 h-5 text-primary" />
                   </div>
-                  <p className="text-[10px] text-primary/60 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">LeetCode: 400+ DSA · Annual Badge 2024</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Education</p>
+                </div>
+                {/* Middle */}
+                <div>
+                  <p className="text-7xl font-display font-black text-gradient leading-none">83.6</p>
+                  <p className="text-base text-muted-foreground mt-2">CGPA · BTech IT · GGSIPU</p>
+                  <p className="text-sm text-muted-foreground/70 mt-0.5">Information Technology · 2021 – 2025</p>
+                </div>
+                {/* Bottom: hover details */}
+                <div className="space-y-1.5">
+                  <div className="flex gap-2 flex-wrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {[
+                      { label: "New Delhi", cls: "bg-secondary text-secondary-foreground" },
+                      { label: "LeetCode: 400+ DSA", cls: "bg-primary/10 text-primary border border-primary/20" },
+                      { label: "Annual Badge 2024", cls: "bg-accent/10 text-accent border border-accent/20" },
+                    ].map(({ label, cls }) => (
+                      <span key={label} className={`px-2.5 py-1 text-[11px] font-medium rounded-lg ${cls}`}>{label}</span>
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500">Click to explore →</p>
                 </div>
               </div>
             </BentoCard>
 
             <BentoCard className="md:col-span-2 group" delay={0.1} elevated>
-              <div onClick={() => openSlide("skills")} className="cursor-pointer">
-                <h2 className="text-xl font-display font-bold mb-1">Skills & Technologies</h2>
-                <p className="text-sm text-muted-foreground mb-4">as a full stack developer, dive in</p>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((skill, i) => (
-                    <motion.span
-                      key={skill}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.3 + i * 0.05 }}
-                      whileHover={{ scale: 1.12, y: -2, transition: { duration: 0.2 } }}
-                      className="px-3 py-1.5 text-xs font-medium rounded-lg bg-secondary text-secondary-foreground cursor-default"
+              <div onClick={() => openSlide("skills")} className="cursor-pointer flex flex-col h-full justify-between">
+                {/* Top */}
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h2 className="text-xl font-display font-bold">
+                      <span className="text-gradient">Skills & Technologies</span>
+                    </h2>
+                    <p className="text-sm text-muted-foreground">26 skills across 4 categories</p>
+                  </div>
+                  <span className="text-3xl font-display font-black text-primary/10 select-none leading-none">26+</span>
+                </div>
+                {/* Middle: 2-row domain grid */}
+                <div className="grid grid-cols-3 gap-2">
+                  {skillDomains.map(({ label, sub, color }) => (
+                    <motion.div
+                      key={label}
+                      whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.2 } }}
+                      className={`px-3 py-2.5 rounded-xl border ${color} cursor-default`}
                     >
-                      {skill}
-                    </motion.span>
+                      <p className="text-xs font-semibold leading-tight">{label}</p>
+                      <p className="text-[10px] opacity-70 mt-0.5 leading-tight">{sub}</p>
+                    </motion.div>
                   ))}
                 </div>
-                <p className="text-[10px] text-primary/60 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Click to explore →</p>
+                {/* Bottom */}
+                <p className="text-[10px] text-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Click to explore all →</p>
               </div>
             </BentoCard>
 
             {/* Middle Row: Experience + Hero + Projects */}
             <BentoCard className="md:col-span-1 md:row-span-2 group" delay={0.15}>
-              <div onClick={() => openSlide("experience")} className="cursor-pointer">
+              <div onClick={() => openSlide("experience")} className="cursor-pointer flex flex-col h-full">
                 <h2 className="text-xl font-display font-bold mb-4">Experience</h2>
-                <div className="space-y-3">
+                <div className="flex flex-col flex-1 gap-3">
                   {[
-                    { role: "SDE — Think41", tag: "Jul 2025 – Present" },
-                    { role: "SDE Intern — Think41", tag: "Feb 2025 – Jun 2025" },
-                    { role: "FE Intern — Technovous", tag: "Oct 2022 – Nov 2022" },
+                    { role: "SDE — Think41", tag: "Jul 2025 – Present", color: "border-primary" },
+                    { role: "SDE Intern — Think41", tag: "Feb – Jun 2025", color: "border-accent" },
+                    { role: "FE Intern — Technovous", tag: "Oct – Nov 2022", color: "border-funk-violet" },
                   ].map((item, i) => (
                     <motion.div
                       key={item.role}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + i * 0.1 }}
-                      className="group/exp p-3 rounded-xl bg-secondary/60 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                      className={`group/exp flex-1 flex flex-col justify-center px-3 py-2 rounded-xl bg-secondary/60 text-sm font-medium text-foreground hover:bg-secondary transition-colors border-l-2 ${item.color}`}
                     >
                       <span>{item.role}</span>
-                      <p className="text-xs text-muted-foreground mt-0 max-h-0 opacity-0 group-hover/exp:max-h-6 group-hover/exp:opacity-100 group-hover/exp:mt-1 transition-all duration-300 overflow-hidden">
-                        {item.tag}
-                      </p>
+                      <span className="text-[11px] text-muted-foreground mt-0.5">{item.tag}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -146,80 +173,102 @@ const Index = () => {
               </div>
             </BentoCard>
 
-            <BentoCard className="md:col-span-2 md:row-span-2 flex flex-col md:flex-row items-center gap-6 group" delay={0.2} elevated>
-              <div onClick={() => openSlide("intro")} className="flex flex-col md:flex-row items-center gap-6 w-full cursor-pointer">
-                <div className="flex-1 text-center md:text-left">
-                  <motion.h1
-                    className="text-3xl md:text-4xl font-display font-bold mb-2"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    Hi, I'm Sukriti Singh 👋
-                  </motion.h1>
-                  <p className="text-base text-muted-foreground mb-2">
-                    SDE @ Think41 · Full-Stack · AI Systems
-                  </p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Building analytics frontends, AI-driven platforms, and backend integrations.
-                    Passionate about clean code, user-focused design, and modern frameworks.
-                  </p>
-                  <div className="flex gap-3 mt-4 justify-center md:justify-start">
-                    <motion.a href="https://github.com/SukritiSingh07" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={e => e.stopPropagation()} className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
-                      <Github className="w-4 h-4" />
-                    </motion.a>
-                    <motion.a href="https://linkedin.com/in/sukriti-singh07" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={e => e.stopPropagation()} className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
-                      <Linkedin className="w-4 h-4" />
-                    </motion.a>
-                    <motion.a href="mailto:singhsukriti0@gmail.com" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={e => e.stopPropagation()} className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
-                      <Mail className="w-4 h-4" />
-                    </motion.a>
+            {/* Hero */}
+            <BentoCard className="md:col-span-2 md:row-span-2 group" delay={0.2} elevated>
+              <div onClick={() => openSlide("intro")} className="cursor-pointer flex flex-col h-full gap-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground mb-2">Software Development Engineer</p>
+                    <h1 className="text-5xl md:text-6xl font-display font-bold leading-[1.05] mb-3">
+                      <span className="text-gradient">Sukriti</span><br />Singh
+                    </h1>
+                    <div className="h-6 overflow-hidden">
+                      <AnimatePresence mode="wait">
+                        <motion.p
+                          key={roleIndex}
+                          initial={{ opacity: 0, y: 12 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -12 }}
+                          transition={{ duration: 0.3 }}
+                          className="text-sm font-medium text-muted-foreground"
+                        >
+                          {roles[roleIndex]}
+                        </motion.p>
+                      </AnimatePresence>
+                    </div>
                   </div>
-                  <p className="text-[10px] text-primary/60 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Click to explore →</p>
-                </div>
-                <motion.div
-                  className="flex-shrink-0"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
-                  transition={{ 
-                    opacity: { delay: 0.4 },
-                    scale: { delay: 0.4, type: "spring", stiffness: 200 },
-                    y: { delay: 1, duration: 3, repeat: Infinity, ease: "easeInOut" }
-                  }}
-                >
-                  <img
+                  <motion.img
                     src={avatarImg}
-                    alt="Profile avatar"
-                    className="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover ring-4 ring-secondary hover:ring-primary/40 transition-all duration-500"
+                    alt="Sukriti Singh"
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover ring-4 ring-secondary flex-shrink-0"
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                   />
-                </motion.div>
+                </div>
+                <motion.p
+                  className="text-sm md:text-base text-muted-foreground leading-relaxed flex-1"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  I build things that work — real-time collaborative platforms,{" "}
+                  <span className="text-foreground font-medium">LLM-powered feedback systems</span>, and full-stack
+                  apps with React, Django &amp; Node. Passionate about clean architecture and shipping products people actually use.
+                </motion.p>
+                <div className="flex gap-2.5">
+                  {[
+                    { href: "https://github.com/SukritiSingh07", Icon: GithubIcon, label: "GitHub" },
+                    { href: "https://linkedin.com/in/sukriti-singh07", Icon: LucideLinkedin, label: "LinkedIn" },
+                    { href: "mailto:singhsukriti0@gmail.com", Icon: Mail, label: "Email" },
+                  ].map(({ href, Icon, label }) => (
+                    <motion.a
+                      key={label}
+                      href={href}
+                      target={label !== "Email" ? "_blank" : undefined}
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={e => e.stopPropagation()}
+                      className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <Icon className="w-4 h-4" />
+                    </motion.a>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2.5 pt-3 border-t border-border/50">
+                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
+                  <p className="text-xs text-muted-foreground">
+                    Currently building <span className="text-foreground font-medium">AI feedback &amp; evaluation tools</span> at Think41
+                  </p>
+                  <p className="ml-auto text-[10px] text-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Click to explore →</p>
+                </div>
               </div>
             </BentoCard>
 
             <BentoCard className="md:col-span-1 md:row-span-2 group" delay={0.25}>
-              <div onClick={() => openSlide("projects")} className="cursor-pointer">
+              <div onClick={() => openSlide("projects")} className="cursor-pointer flex flex-col h-full">
                 <h2 className="text-xl font-display font-bold mb-4">Projects</h2>
-                <div className="space-y-3">
+                <div className="flex flex-col flex-1 gap-3">
                   {[
-                    { name: "Org Centric PM System", tags: ["MERN", "WebSockets", "RBAC"] },
-                    { name: "Friends Chat App", tags: ["MERN", "JWT", "OAuth"] },
+                    { name: "Org Centric PM System", tags: ["MERN", "WebSockets", "RBAC"], color: "border-primary" },
+                    { name: "Friends Chat", tags: ["MERN", "JWT", "OAuth"], color: "border-accent" },
+                    { name: "AI Feedback & Evaluation", tags: ["React", "Django", "Gen AI"], color: "border-funk-violet" },
+                    { name: "Multi-Agent AI System", tags: ["OpenAI SDK", "Agents"], color: "border-funk-magenta" },
                   ].map((project, i) => (
                     <motion.div
                       key={project.name}
                       initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + i * 0.1 }}
-                      className="group/proj p-3 rounded-xl bg-secondary/60 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                      className={`group/proj flex-1 flex flex-col justify-center px-3 py-2 rounded-xl bg-secondary/60 text-sm font-medium text-foreground hover:bg-secondary transition-colors border-l-2 ${project.color}`}
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between mb-1.5">
                         <span>{project.name}</span>
-                        <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover/proj:opacity-100 transition-opacity" />
+                        <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover/proj:opacity-100 transition-opacity flex-shrink-0" />
                       </div>
-                      <div className="flex gap-1.5 mt-0 max-h-0 opacity-0 group-hover/proj:max-h-8 group-hover/proj:opacity-100 group-hover/proj:mt-2 transition-all duration-300 overflow-hidden">
+                      <div className="flex gap-1.5 flex-wrap">
                         {project.tags.map(tag => (
-                          <span key={tag} className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-primary/10 text-primary">
-                            {tag}
-                          </span>
+                          <span key={tag} className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-primary/10 text-primary">{tag}</span>
                         ))}
                       </div>
                     </motion.div>
@@ -229,11 +278,11 @@ const Index = () => {
               </div>
             </BentoCard>
 
-            {/* Bottom Row: Contact + About */}
+            {/* Bottom Row */}
             <BentoCard className="md:col-span-2 group" delay={0.3}>
               <div onClick={() => openSlide("contact")} className="cursor-pointer">
                 <div className="flex items-center gap-3">
-                  <motion.div 
+                  <motion.div
                     className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
                     whileHover={{ scale: 1.15, rotate: 5, transition: { duration: 0.2 } }}
                   >
@@ -254,17 +303,17 @@ const Index = () => {
             <BentoCard className="md:col-span-2 group" delay={0.35}>
               <div onClick={() => openSlide("contact")} className="cursor-pointer">
                 <div className="flex items-center gap-3">
-                  <motion.div 
+                  <motion.div
                     className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
                     whileHover={{ scale: 1.15, rotate: -5, transition: { duration: 0.2 } }}
                   >
-                    <Code2 className="w-5 h-5 text-primary" />
+                    <FolderOpen className="w-5 h-5 text-primary" />
                   </motion.div>
                   <div>
-                    <h3 className="font-display font-semibold">Tech Blog</h3>
-                    <p className="text-sm text-muted-foreground">Writing about web dev & beyond</p>
+                    <h3 className="font-display font-semibold">Let's Connect</h3>
+                    <p className="text-sm text-muted-foreground">singhsukriti0@gmail.com</p>
                     <p className="text-xs text-muted-foreground/70 max-h-0 opacity-0 group-hover:max-h-6 group-hover:opacity-100 group-hover:mt-1 transition-all duration-300 overflow-hidden">
-                      Latest: "Why TypeScript is a must in 2024"
+                      GitHub · LinkedIn · Email
                     </p>
                   </div>
                 </div>
