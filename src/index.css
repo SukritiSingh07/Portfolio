@@ -167,7 +167,7 @@
 
 @layer utilities {
   .bento-card {
-    @apply bg-card text-card-foreground rounded-2xl p-6 transition-all duration-300 ease-out;
+    @apply bg-card text-card-foreground rounded-2xl p-4 lg:p-6 transition-all duration-300 ease-out;
     border: 1px solid hsl(var(--border));
     position: relative;
   }
@@ -200,7 +200,7 @@
   }
 
   .bento-card-elevated {
-    @apply rounded-2xl p-6 transition-all duration-300 ease-out;
+    @apply rounded-2xl p-4 lg:p-6 transition-all duration-300 ease-out;
     background: hsl(var(--card-elevated));
     color: hsl(var(--card-elevated-foreground));
     border: 1px solid hsl(var(--border));
@@ -243,6 +243,26 @@
   @keyframes funk-shift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
+  }
+
+  /* Container queries — only compress at genuinely small card sizes */
+  @container (max-height: 180px) {
+    h1, h2, h3 { font-size: 0.95rem !important; margin-bottom: 0.2rem !important; }
+    p, span, li { font-size: 0.8rem !important; }
+    [class*="gap-3"] { gap: 0.4rem !important; }
+    [class*="gap-2"] { gap: 0.3rem !important; }
+    [class*="mb-3"], [class*="mb-4"] { margin-bottom: 0.3rem !important; }
+    [class*="mt-2"], [class*="mt-3"] { margin-top: 0.2rem !important; }
+    img, [class*="w-20"], [class*="w-28"] { width: 2.75rem !important; height: 2.75rem !important; }
+    [class*="w-10"][class*="h-10"] { width: 2rem !important; height: 2rem !important; }
+    [class*="py-2"] { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+  }
+
+  @container (max-height: 130px) {
+    h1, h2, h3 { font-size: 0.8rem !important; margin-bottom: 0.15rem !important; }
+    p, span, li { font-size: 0.68rem !important; }
+    [class*="gap-3"], [class*="gap-2"] { gap: 0.2rem !important; }
+    [class*="w-10"][class*="h-10"] { width: 1.75rem !important; height: 1.75rem !important; }
   }
 
   .slideshow-scroll::-webkit-scrollbar {

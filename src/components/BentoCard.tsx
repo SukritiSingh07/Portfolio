@@ -47,7 +47,7 @@ const BentoCard = ({ children, className = "", delay = 0, elevated = false }: Be
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`${elevated ? "bento-card-elevated" : "bento-card"} cursor-pointer relative overflow-hidden ${className}`}
+      className={`${elevated ? "bento-card-elevated" : "bento-card"} cursor-pointer relative overflow-hidden min-h-0 ${className}`}
     >
       {/* Glow follow effect */}
       <motion.div
@@ -59,7 +59,7 @@ const BentoCard = ({ children, className = "", delay = 0, elevated = false }: Be
           ),
         }}
       />
-      <div className="relative z-10 h-full">{children}</div>
+      <div className="relative z-10 h-full" style={{ containerType: "size" }}>{children}</div>
     </motion.div>
   );
 };

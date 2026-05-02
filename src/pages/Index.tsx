@@ -111,31 +111,31 @@ const Index = () => {
       )}
 
       {/* Bento Grid */}
-      <div ref={gridRef} className="flex-1 pt-4 md:pt-10 lg:pt-16 px-4 md:px-10 lg:px-16 pb-2 md:pb-4 flex flex-col md:overflow-hidden">
-        <div className="flex-1 flex flex-col">
+      <div ref={gridRef} className="flex-1 min-h-0 pt-4 md:pt-6 lg:pt-10 px-4 md:px-8 lg:px-14 pb-2 md:pb-3 flex flex-col md:overflow-hidden">
+        <div className="flex-1 min-h-0 flex flex-col">
           <div
-            className="grid grid-cols-1 md:grid-cols-4 gap-4 flex-1"
-            style={isDesktop ? { gridTemplateRows: "1fr 1fr 1fr auto" } : undefined}
+            className="grid grid-cols-1 md:grid-cols-4 gap-3 flex-1 min-h-0"
+            style={isDesktop ? { gridTemplateRows: "1fr 1fr 1fr 0.55fr" } : undefined}
           >
 
             {/* Top Row: Education + Skills */}
             <BentoCard className="md:col-span-2 group" delay={0} elevated>
               <div onClick={() => openSlide("education")} className="cursor-pointer flex flex-col h-full justify-between">
                 {/* Top */}
-                <div className="flex items-center gap-3">
-                  <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10">
-                    <GraduationCap className="w-5 h-5 text-primary" />
+                <div className="flex items-center gap-2">
+                  <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-xl bg-primary/10">
+                    <GraduationCap className="w-4 h-4 text-primary" />
                   </div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Education</p>
                 </div>
                 {/* Middle */}
                 <div>
-                  <p className="text-5xl md:text-7xl font-display font-black text-gradient leading-none">83.6</p>
-                  <p className="text-base text-muted-foreground mt-2">CGPA · BTech IT · GGSIPU</p>
-                  <p className="text-sm text-muted-foreground/70 mt-0.5">Information Technology · 2021 – 2025</p>
+                  <p className="font-display font-black text-gradient leading-none" style={{ fontSize: "clamp(2rem, 6vh, 4.5rem)" }}>83.6</p>
+                  <p className="text-sm text-muted-foreground mt-1.5">CGPA · BTech IT · GGSIPU</p>
+                  <p className="text-xs text-muted-foreground/70 mt-0.5">Information Technology · 2021 – 2025</p>
                 </div>
                 {/* Bottom: hover details */}
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <div className="flex gap-2 flex-wrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     {[
                       { label: "New Delhi", cls: "bg-secondary text-secondary-foreground" },
@@ -151,24 +151,24 @@ const Index = () => {
             </BentoCard>
 
             <BentoCard className="md:col-span-2 group" delay={0.1} elevated>
-              <div onClick={() => openSlide("skills")} className="cursor-pointer flex flex-col h-full justify-between">
+              <div onClick={() => openSlide("skills")} className="cursor-pointer flex flex-col h-full gap-2">
                 {/* Top */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <h2 className="text-xl font-display font-bold">
+                    <h2 className="text-base lg:text-xl font-display font-bold">
                       <span className="text-gradient">Skills & Technologies</span>
                     </h2>
-                    <p className="text-sm text-muted-foreground">26 skills across 4 categories</p>
+                    <p className="text-xs text-muted-foreground">26 skills across 4 categories</p>
                   </div>
-                  <span className="text-3xl font-display font-black text-primary/10 select-none leading-none">26+</span>
+                  <span className="text-2xl lg:text-3xl font-display font-black text-primary/10 select-none leading-none">26+</span>
                 </div>
                 {/* Middle: 2-row domain grid */}
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-1.5 flex-1 content-center">
                   {skillDomains.map(({ label, sub, color }) => (
                     <motion.div
                       key={label}
                       whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.2 } }}
-                      className={`px-3 py-2.5 rounded-xl border ${color} cursor-default`}
+                      className={`px-2 py-1.5 rounded-xl border ${color} cursor-default`}
                     >
                       <p className="text-xs font-semibold leading-tight">{label}</p>
                       <p className="text-[10px] opacity-70 mt-0.5 leading-tight">{sub}</p>
@@ -183,7 +183,7 @@ const Index = () => {
             {/* Middle Row: Experience + Hero + Projects */}
             <BentoCard className="md:col-span-1 md:row-span-2 group" delay={0.15}>
               <div onClick={() => openSlide("experience")} className="cursor-pointer flex flex-col h-full">
-                <h2 className="text-xl font-display font-bold mb-4">Experience</h2>
+                <h2 className="text-base lg:text-xl font-display font-bold mb-2 lg:mb-3">Experience</h2>
                 <div className="flex flex-col flex-1 gap-3">
                   {[
                     { role: "SDE — Think41", tag: "Jul 2025 – Present", color: "border-primary" },
@@ -208,22 +208,22 @@ const Index = () => {
 
             {/* Hero */}
             <BentoCard className="md:col-span-2 md:row-span-2 group" delay={0.2} elevated>
-              <div onClick={() => openSlide("intro")} className="cursor-pointer flex flex-col h-full gap-5">
-                <div className="flex items-start justify-between gap-4">
+              <div onClick={() => openSlide("intro")} className="cursor-pointer flex flex-col h-full gap-3">
+                <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground mb-2">Software Development Engineer</p>
-                    <h1 className="text-5xl md:text-6xl font-display font-bold leading-[1.05] mb-3">
+                    <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground mb-1.5">Software Development Engineer</p>
+                    <h1 className="font-display font-bold leading-[1.05] mb-2" style={{ fontSize: "clamp(1.5rem, 8cqh, 3.5rem)" }}>
                       <span className="text-gradient">Sukriti</span><br />Singh
                     </h1>
-                    <div className="h-6 overflow-hidden">
+                    <div className="h-5 overflow-hidden">
                       <AnimatePresence mode="wait">
                         <motion.p
                           key={roleIndex}
-                          initial={{ opacity: 0, y: 12 }}
+                          initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -12 }}
+                          exit={{ opacity: 0, y: -10 }}
                           transition={{ duration: 0.3 }}
-                          className="text-sm font-medium text-muted-foreground"
+                          className="text-xs font-medium text-muted-foreground"
                         >
                           {roles[roleIndex]}
                         </motion.p>
@@ -233,13 +233,13 @@ const Index = () => {
                   <motion.img
                     src={avatarImg}
                     alt="Sukriti Singh"
-                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover ring-4 ring-secondary flex-shrink-0"
+                    className="w-16 h-16 md:w-20 md:h-20 lg:w-28 lg:h-28 rounded-full object-cover ring-4 ring-secondary flex-shrink-0"
                     animate={{ y: [0, -6, 0] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                   />
                 </div>
                 <motion.p
-                  className="text-sm md:text-base text-muted-foreground leading-relaxed flex-1"
+                  className="text-xs md:text-sm text-muted-foreground leading-relaxed line-clamp-2 lg:line-clamp-3"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
@@ -248,7 +248,7 @@ const Index = () => {
                   <span className="text-foreground font-medium">LLM-powered feedback systems</span>, and full-stack
                   apps with React, Django &amp; Node. Passionate about clean architecture and shipping products people actually use.
                 </motion.p>
-                <div className="flex gap-2.5">
+                <div className="flex gap-2">
                   {[
                     { href: "https://github.com/SukritiSingh07", Icon: GithubIcon, label: "GitHub" },
                     { href: "https://linkedin.com/in/sukriti-singh07", Icon: LucideLinkedin, label: "LinkedIn" },
@@ -262,25 +262,25 @@ const Index = () => {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={e => e.stopPropagation()}
-                      className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                      className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="w-3.5 h-3.5" />
                     </motion.a>
                   ))}
                 </div>
-                <div className="flex items-center gap-2.5 pt-3 border-t border-border/50">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
-                  <p className="text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 pt-2 border-t border-border/50 mt-auto">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
+                  <p className="text-[11px] text-muted-foreground">
                     Currently building <span className="text-foreground font-medium">AI feedback &amp; evaluation tools</span> at Think41
                   </p>
-                  <p className="ml-auto text-[10px] text-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Click to explore →</p>
+                  <p className="ml-auto text-[10px] text-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Click →</p>
                 </div>
               </div>
             </BentoCard>
 
             <BentoCard className="md:col-span-1 md:row-span-2 group" delay={0.25}>
               <div onClick={() => openSlide("projects")} className="cursor-pointer flex flex-col h-full">
-                <h2 className="text-xl font-display font-bold mb-4">Projects</h2>
+                <h2 className="text-base lg:text-xl font-display font-bold mb-2 lg:mb-3">Projects</h2>
                 <div className="flex flex-col flex-1 gap-3">
                   {[
                     { name: "Org Centric PM System", tags: ["MERN", "WebSockets", "RBAC"], color: "border-primary" },
@@ -313,44 +313,38 @@ const Index = () => {
 
             {/* Bottom Row */}
             <BentoCard className="md:col-span-2 group" delay={0.3}>
-              <div onClick={() => openSlide("contact")} className="cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <motion.div
-                    className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
-                    whileHover={{ scale: 1.15, rotate: 5, transition: { duration: 0.2 } }}
-                  >
-                    <Briefcase className="w-5 h-5 text-primary" />
-                  </motion.div>
-                  <div>
-                    <h3 className="font-display font-semibold">Open to Work</h3>
-                    <p className="text-sm text-muted-foreground">Looking for full-time opportunities</p>
-                    <p className="text-xs text-muted-foreground/70 max-h-0 opacity-0 group-hover:max-h-6 group-hover:opacity-100 group-hover:mt-1 transition-all duration-300 overflow-hidden">
-                      Remote · Full-time · Startups welcome
-                    </p>
-                  </div>
+              <div onClick={() => openSlide("contact")} className="cursor-pointer flex items-center h-full gap-3">
+                <motion.div
+                  className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center"
+                  whileHover={{ scale: 1.15, rotate: 5, transition: { duration: 0.2 } }}
+                >
+                  <Briefcase className="w-5 h-5 text-primary" />
+                </motion.div>
+                <div className="min-w-0">
+                  <h3 className="font-display font-semibold truncate">Open to Work</h3>
+                  <p className="text-sm text-muted-foreground truncate">Looking for full-time opportunities</p>
+                  <p className="text-xs text-muted-foreground/70 max-h-0 opacity-0 group-hover:max-h-6 group-hover:opacity-100 group-hover:mt-1 transition-all duration-300 overflow-hidden">
+                    Remote · Full-time · Startups welcome
+                  </p>
                 </div>
-                <p className="text-[10px] text-primary/60 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Click to explore →</p>
               </div>
             </BentoCard>
 
             <BentoCard className="md:col-span-2 group" delay={0.35}>
-              <div onClick={() => openSlide("contact")} className="cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <motion.div
-                    className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
-                    whileHover={{ scale: 1.15, rotate: -5, transition: { duration: 0.2 } }}
-                  >
-                    <FolderOpen className="w-5 h-5 text-primary" />
-                  </motion.div>
-                  <div>
-                    <h3 className="font-display font-semibold">Let's Connect</h3>
-                    <p className="text-sm text-muted-foreground">singhsukriti0@gmail.com</p>
-                    <p className="text-xs text-muted-foreground/70 max-h-0 opacity-0 group-hover:max-h-6 group-hover:opacity-100 group-hover:mt-1 transition-all duration-300 overflow-hidden">
-                      GitHub · LinkedIn · Email
-                    </p>
-                  </div>
+              <div onClick={() => openSlide("contact")} className="cursor-pointer flex items-center h-full gap-3">
+                <motion.div
+                  className="w-10 h-10 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center"
+                  whileHover={{ scale: 1.15, rotate: -5, transition: { duration: 0.2 } }}
+                >
+                  <FolderOpen className="w-5 h-5 text-primary" />
+                </motion.div>
+                <div className="min-w-0">
+                  <h3 className="font-display font-semibold truncate">Let's Connect</h3>
+                  <p className="text-sm text-muted-foreground truncate">singhsukriti0@gmail.com</p>
+                  <p className="text-xs text-muted-foreground/70 max-h-0 opacity-0 group-hover:max-h-6 group-hover:opacity-100 group-hover:mt-1 transition-all duration-300 overflow-hidden">
+                    GitHub · LinkedIn · Email
+                  </p>
                 </div>
-                <p className="text-[10px] text-primary/60 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Click to explore →</p>
               </div>
             </BentoCard>
 
