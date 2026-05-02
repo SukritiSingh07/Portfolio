@@ -112,21 +112,30 @@ const SlideShow = ({ slides, initialSlide = 0, onClose }: SlideShowProps) => {
     return () => window.removeEventListener("keydown", handleKey);
   }, [goNext, goPrev, onClose]);
 
-  // Mouse wheel navigation
+  // Mouse wheel navigation — only navigate slides when scrolled to the edge of current slide
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        if (e.deltaY > 30) goNext();
-        else if (e.deltaY < -30) goPrev();
-      }, 50);
+      const currentSlide = slidesRef.current?.children[currentIndex] as HTMLElement | undefined;
+      if (!currentSlide) return;
+
+      const atBottom = currentSlide.scrollTop + currentSlide.clientHeight >= currentSlide.scrollHeight - 8;
+      const atTop = currentSlide.scrollTop <= 8;
+
+      if (e.deltaY > 30 && atBottom) {
+        e.preventDefault();
+        clearTimeout(timeout);
+        timeout = setTimeout(() => goNext(), 50);
+      } else if (e.deltaY < -30 && atTop) {
+        e.preventDefault();
+        clearTimeout(timeout);
+        timeout = setTimeout(() => goPrev(), 50);
+      }
     };
     const el = containerRef.current;
     el?.addEventListener("wheel", handleWheel, { passive: false });
     return () => { el?.removeEventListener("wheel", handleWheel); clearTimeout(timeout); };
-  }, [goNext, goPrev]);
+  }, [goNext, goPrev, currentIndex]);
 
   // Entrance animation — cinematic zoom + fade
   useEffect(() => {
