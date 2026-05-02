@@ -37,6 +37,7 @@ const Index = () => {
   const [initialSlide, setInitialSlide] = useState(0);
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 768);
+  const [gridScale, setGridScale] = useState(1);
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,6 +46,19 @@ const Index = () => {
     mq.addEventListener("change", handler);
     setIsDesktop(mq.matches);
     return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const update = () => {
+      if (window.innerWidth >= 768) {
+        setGridScale(Math.min(window.innerWidth / 1600, window.innerHeight / 885, 1));
+      } else {
+        setGridScale(1);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   useEffect(() => {
@@ -99,7 +113,10 @@ const Index = () => {
   }, [slideShowOpen]);
 
   return (
-    <div className="min-h-screen md:h-screen flex flex-col bg-background transition-colors duration-300 overflow-y-auto md:overflow-hidden">
+    <div
+      className="min-h-screen md:h-screen flex flex-col bg-background transition-colors duration-300 overflow-y-auto md:overflow-hidden"
+      style={isDesktop && gridScale < 1 ? { zoom: gridScale, height: `${100 / gridScale}vh` } : undefined}
+    >
       <ThemeToggle />
 
       {slideShowOpen && (
