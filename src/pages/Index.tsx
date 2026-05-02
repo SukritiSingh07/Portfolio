@@ -36,7 +36,16 @@ const Index = () => {
   const [slideShowOpen, setSlideShowOpen] = useState(false);
   const [initialSlide, setInitialSlide] = useState(0);
   const [roleIndex, setRoleIndex] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 768);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener("change", handler);
+    setIsDesktop(mq.matches);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => setRoleIndex(i => (i + 1) % roles.length), 2600);
@@ -54,7 +63,8 @@ const Index = () => {
     const handleWheel = (e: WheelEvent) => {
       const el = gridRef.current;
       if (!el) return;
-      const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 50;
+      const isScrollable = el.scrollHeight > el.clientHeight + 50;
+      const atBottom = !isScrollable || el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
       if (atBottom && e.deltaY > 30) {
         e.preventDefault();
         setInitialSlide(0);
@@ -65,8 +75,31 @@ const Index = () => {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [slideShowOpen]);
 
+  // Touch swipe-up to open slideshow on mobile
+  useEffect(() => {
+    if (slideShowOpen) return;
+    let startY = 0;
+    const onTouchStart = (e: TouchEvent) => { startY = e.touches[0].clientY; };
+    const onTouchEnd = (e: TouchEvent) => {
+      const el = gridRef.current;
+      if (!el) return;
+      const deltaY = startY - e.changedTouches[0].clientY;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 50;
+      if (atBottom && deltaY > 60) {
+        setInitialSlide(0);
+        setSlideShowOpen(true);
+      }
+    };
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [slideShowOpen]);
+
   return (
-    <div className="h-screen flex flex-col bg-background transition-colors duration-300 overflow-hidden">
+    <div className="min-h-screen md:h-screen flex flex-col bg-background transition-colors duration-300 overflow-y-auto md:overflow-hidden">
       <ThemeToggle />
 
       {slideShowOpen && (
@@ -78,11 +111,11 @@ const Index = () => {
       )}
 
       {/* Bento Grid */}
-      <div ref={gridRef} className="flex-1 pt-4 md:pt-10 lg:pt-16 px-4 md:px-10 lg:px-16 pb-2 md:pb-4 flex flex-col overflow-hidden">
+      <div ref={gridRef} className="flex-1 pt-4 md:pt-10 lg:pt-16 px-4 md:px-10 lg:px-16 pb-2 md:pb-4 flex flex-col md:overflow-hidden">
         <div className="flex-1 flex flex-col">
           <div
             className="grid grid-cols-1 md:grid-cols-4 gap-4 flex-1"
-            style={{ gridTemplateRows: "1fr 1fr 1fr auto" }}
+            style={isDesktop ? { gridTemplateRows: "1fr 1fr 1fr auto" } : undefined}
           >
 
             {/* Top Row: Education + Skills */}
@@ -97,7 +130,7 @@ const Index = () => {
                 </div>
                 {/* Middle */}
                 <div>
-                  <p className="text-7xl font-display font-black text-gradient leading-none">83.6</p>
+                  <p className="text-5xl md:text-7xl font-display font-black text-gradient leading-none">83.6</p>
                   <p className="text-base text-muted-foreground mt-2">CGPA · BTech IT · GGSIPU</p>
                   <p className="text-sm text-muted-foreground/70 mt-0.5">Information Technology · 2021 – 2025</p>
                 </div>
@@ -325,9 +358,10 @@ const Index = () => {
 
           {/* Scroll down indicator */}
           <motion.div
-            className="flex flex-col items-center mt-3 mb-1"
+            className="flex flex-col items-center mt-3 mb-1 cursor-pointer"
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            onClick={() => { setInitialSlide(0); setSlideShowOpen(true); }}
           >
             <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">Scroll down to start presentation</p>
             <ChevronDown className="w-5 h-5 text-muted-foreground" />

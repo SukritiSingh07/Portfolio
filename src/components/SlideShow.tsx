@@ -13,6 +13,10 @@ const SlideShow = ({ slides, initialSlide = 0, onClose }: SlideShowProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const slidesRef = useRef<HTMLDivElement>(null);
   const isAnimating = useRef(false);
+  const edgeBottomRef = useRef(false);
+  const edgeTopRef = useRef(false);
+  const edgeArmedAt = useRef(0);
+  const lastNavTime = useRef(0);
 
   const animateToSlide = useCallback((newIndex: number, direction: "left" | "right") => {
     if (isAnimating.current || !slidesRef.current) return;
@@ -101,41 +105,100 @@ const SlideShow = ({ slides, initialSlide = 0, onClose }: SlideShowProps) => {
     }
   }, [currentIndex, animateToSlide]);
 
+  const handleClose = useCallback(() => {
+    if (!containerRef.current) return onClose();
+    gsap.to(containerRef.current, {
+      opacity: 0,
+      scale: 0.92,
+      filter: "blur(12px)",
+      duration: 0.4,
+      ease: "power3.in",
+      onComplete: onClose,
+    });
+  }, [onClose]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); goNext(); }
-      if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); }
-      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") { e.preventDefault(); currentIndex === 0 ? handleClose() : goPrev(); }
+      if (e.key === "Escape") handleClose();
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [goNext, goPrev, onClose]);
+  }, [goNext, goPrev, handleClose, currentIndex]);
 
-  // Mouse wheel navigation — only navigate slides when scrolled to the edge of current slide
+  // Reset edge flags whenever the active slide changes
+  useEffect(() => {
+    edgeBottomRef.current = false;
+    edgeTopRef.current = false;
+  }, [currentIndex]);
+
+  // Mouse wheel navigation
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     const handleWheel = (e: WheelEvent) => {
+      const now = Date.now();
+
+      // Block inertia bleed-through after a navigation
+      if (now - lastNavTime.current < 1000) {
+        e.preventDefault();
+        return;
+      }
+
       const currentSlide = slidesRef.current?.children[currentIndex] as HTMLElement | undefined;
       if (!currentSlide) return;
 
+      const scrollable = currentSlide.scrollHeight > currentSlide.clientHeight + 8;
       const atBottom = currentSlide.scrollTop + currentSlide.clientHeight >= currentSlide.scrollHeight - 8;
       const atTop = currentSlide.scrollTop <= 8;
 
-      if (e.deltaY > 30 && atBottom) {
+      const navigate = (fn: () => void) => {
         e.preventDefault();
+        edgeBottomRef.current = false;
+        edgeTopRef.current = false;
         clearTimeout(timeout);
-        timeout = setTimeout(() => goNext(), 50);
-      } else if (e.deltaY < -30 && atTop) {
-        e.preventDefault();
-        clearTimeout(timeout);
-        timeout = setTimeout(() => goPrev(), 50);
+        timeout = setTimeout(() => { lastNavTime.current = Date.now(); fn(); }, 50);
+      };
+
+      if (e.deltaY > 30) {
+        edgeTopRef.current = false;
+        if (!scrollable) {
+          navigate(goNext);
+        } else if (edgeBottomRef.current) {
+          // Second intentional scroll after arming — require 500ms gap from when edge was armed
+          if (now - edgeArmedAt.current >= 500) {
+            navigate(goNext);
+          } else {
+            e.preventDefault(); // still in same gesture, suppress
+          }
+        } else if (atBottom) {
+          e.preventDefault();
+          edgeBottomRef.current = true;
+          edgeArmedAt.current = now;
+        }
+      } else if (e.deltaY < -30) {
+        edgeBottomRef.current = false;
+        const prevOrClose = currentIndex === 0 ? handleClose : goPrev;
+        if (!scrollable) {
+          navigate(prevOrClose);
+        } else if (edgeTopRef.current) {
+          if (now - edgeArmedAt.current >= 500) {
+            navigate(prevOrClose);
+          } else {
+            e.preventDefault();
+          }
+        } else if (atTop) {
+          e.preventDefault();
+          edgeTopRef.current = true;
+          edgeArmedAt.current = now;
+        }
       }
     };
     const el = containerRef.current;
     el?.addEventListener("wheel", handleWheel, { passive: false });
     return () => { el?.removeEventListener("wheel", handleWheel); clearTimeout(timeout); };
-  }, [goNext, goPrev, currentIndex]);
+  }, [goNext, goPrev, handleClose, currentIndex]);
 
   // Entrance animation — cinematic zoom + fade
   useEffect(() => {
@@ -165,17 +228,6 @@ const SlideShow = ({ slides, initialSlide = 0, onClose }: SlideShowProps) => {
     }
   }, [initialSlide]);
 
-  const handleClose = () => {
-    if (!containerRef.current) return onClose();
-    gsap.to(containerRef.current, {
-      opacity: 0,
-      scale: 0.92,
-      filter: "blur(12px)",
-      duration: 0.4,
-      ease: "power3.in",
-      onComplete: onClose,
-    });
-  };
 
   return (
     <div
@@ -218,7 +270,7 @@ const SlideShow = ({ slides, initialSlide = 0, onClose }: SlideShowProps) => {
           {slides.map((slide) => (
             <div
               key={slide.id}
-              className="absolute inset-0 flex items-start justify-center p-8 md:p-16 overflow-y-auto"
+              className="absolute inset-0 flex items-start justify-center p-8 md:p-16 overflow-y-auto slideshow-scroll"
               style={{ display: "none", backfaceVisibility: "hidden" }}
             >
               <div className="w-full max-w-5xl min-h-full flex flex-col justify-center">

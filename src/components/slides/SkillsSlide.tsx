@@ -76,6 +76,24 @@ const SkillsSlide = () => (
           ))}
         </div>
       </div>
+      <div data-animate>
+        <div className="flex items-center gap-3 mb-4">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground whitespace-nowrap">Certifications</p>
+          <div className="flex-1 h-px bg-border" />
+        </div>
+        <div className="flex flex-col gap-3">
+          {[
+            "Web Development Bootcamp",
+            "Mastering Data Structures & Algorithms using C and C++",
+            "Infosys Foundation Finishing School for Employability Program",
+          ].map((cert) => (
+            <div key={cert} className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors">
+              <BadgeCheck className="w-5 h-5 text-primary flex-shrink-0" />
+              <span className="text-sm text-foreground/80">{cert}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 );
